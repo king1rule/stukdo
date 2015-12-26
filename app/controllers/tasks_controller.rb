@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :change]
 
   # GET /tasks
   # GET /tasks.json
@@ -15,6 +15,7 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    #respond_with(@task)
   end
 
   # GET /tasks/new
@@ -63,6 +64,15 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def change 
+    @task.update_attributes(state: params[:state])
+    respond_to do |format|
+    format.html { redirect_to @task, notice: 'Task update.' }
+    #format.html {redirect_to_tasks_path, notice: "Task Update"}
+    
     end
   end
 
